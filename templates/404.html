@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Page not found · CareerConnect{% endblock %}
+{% block content %}
+<section class="wrap not-found">
+  <p class="kicker">404</p>
+  <h1>This job listing could not be found</h1>
+  <p class="lede" style="margin-inline:auto;">The page or vacancy you requested is not available. It may have been removed, or the link may be incorrect.</p>
+  <p style="margin-top:1.4rem;"><a class="btn btn-dark" href="{{ url_for('home') }}">Back to job listings</a></p>
+</section>
+{% endblock %}

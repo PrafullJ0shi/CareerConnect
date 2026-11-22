@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Post a job · CareerConnect{% endblock %}
+{% block content %}
+<section class="wrap page-head">
+  <p class="kicker">For employers</p>
+  <h1>Post a job</h1>
+  <p>Enter the vacancy details below. All fields are required. The listing will appear on the home page after it is saved.</p>
+</section>
+
+<section class="wrap">
+  <div class="panel">
+    {% if errors %}
+      <div class="errors" role="alert">
+        {% for error in errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <form class="form" method="post" action="{{ url_for('post_job') }}" novalidate>
+      <div class="form-row">
+        <label for="title">Job title <span class="req">*</span></label>
+        <input id="title" name="title" type="text" value="{{ form.title }}" required>
+      </div>
+      <div class="form-row">
+        <label for="company">Company <span class="req">*</span></label>
+        <input id="company" name="company" type="text" value="{{ form.company }}" required>
+      </div>
+      <div class="form-row">
+        <label for="location">Location <span class="req">*</span></label>
+        <input id="location" name="location" type="text" value="{{ form.location }}" placeholder="City, or Remote" required>
+      </div>
+      <div class="form-row">
+        <label for="job_type">Job type <span class="req">*</span></label>
+        <select id="job_type" name="job_type" required>
+          <option value="" {% if not form.job_type %}selected{% endif %}>Select a type</option>
+          {% for option in job_types %}
+            <option value="{{ option }}" {% if form.job_type == option %}selected{% endif %}>{{ option }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="description">Description <span class="req">*</span></label>
+        <textarea id="description" name="description" required>{{ form.description }}</textarea>
+      </div>
+      <div class="form-row">
+        <label for="email">Contact email <span class="req">*</span></label>
+        <input id="email" name="email" type="email" value="{{ form.email }}" placeholder="hiring@company.example" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Publish listing</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

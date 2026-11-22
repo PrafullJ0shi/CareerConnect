@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{ job['title'] }} · {{ job['company'] }} · CareerConnect{% endblock %}
+{% block content %}
+<section class="wrap page-head job-hero">
+  <p class="kicker">Job details</p>
+  <h1>{{ job['title'] }}</h1>
+  <p class="lede">{{ job['company'] }}</p>
+  <div class="meta">
+    <span class="chip">{{ job['job_type'] }}</span>
+    <span class="chip gold">{{ job['location'] }}</span>
+  </div>
+</section>
+
+<section class="wrap job-layout">
+  <article class="panel job-body">
+    <h2>About this role</h2>
+    <p>{{ job['description'] }}</p>
+  </article>
+  <aside class="panel">
+    <p class="contact-label">Contact the employer</p>
+    <a class="email-link" href="mailto:{{ job['email'] }}">{{ job['email'] }}</a>
+    <p style="color:var(--ink-soft);font-size:0.92rem;margin:0 0 1rem;">This opens your email application with the address supplied on the listing.</p>
+    <a class="btn btn-primary" href="mailto:{{ job['email'] }}?subject=Application:%20{{ job['title']|urlencode }}">Email employer</a>
+  </aside>
+</section>
+{% endblock %}

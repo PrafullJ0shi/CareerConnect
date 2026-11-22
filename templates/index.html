@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{% if q %}Search: {{ q }} · CareerConnect{% else %}CareerConnect · Find your next role{% endif %}{% endblock %}
+{% block content %}
+<section class="wrap hero">
+  <p class="kicker">Job portal</p>
+  <h1>Find your next role, or publish one.</h1>
+  <p class="lede">Browse vacancies, search by title, company, location or job type, and post a listing in a structured form.</p>
+  <form class="search-panel" method="get" action="{{ url_for('home') }}" role="search">
+    <label class="visually-hidden" for="q" style="position:absolute;left:-999px;">Search jobs</label>
+    <input id="q" type="search" name="q" value="{{ q }}" placeholder="Role, company, location or type" autocomplete="off">
+    <button class="btn btn-dark" type="submit">Search</button>
+  </form>
+</section>
+
+<section class="wrap">
+  <div class="section-head">
+    <h2>{% if q %}Search results{% else %}Open roles{% endif %}</h2>
+    <p class="count">
+      {% if q %}
+        {{ jobs|length }} result{% if jobs|length != 1 %}s{% endif %} for “{{ q }}”
+      {% else %}
+        {{ jobs|length }} listing{% if jobs|length != 1 %}s{% endif %}
+      {% endif %}
+    </p>
+  </div>
+
+  {% if jobs %}
+    <div class="job-grid">
+      {% for job in jobs %}
+        <a class="job-card" href="{{ url_for('job_detail', job_id=job['id']) }}">
+          <span class="chip">{{ job['job_type'] }}</span>
+          <h2>{{ job['title'] }}</h2>
+          <p class="company">{{ job['company'] }}</p>
+          <div class="meta">
+            <span class="chip gold">{{ job['location'] }}</span>
+          </div>
+          <p class="excerpt">{{ job['description'][:170] }}{% if job['description']|length > 170 %}…{% endif %}</p>
+          <span class="card-link">View details →</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">
+      <h2>No jobs matched your search</h2>
+      <p>Try a different keyword, or <a href="{{ url_for('home') }}">browse all openings</a>.</p>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
